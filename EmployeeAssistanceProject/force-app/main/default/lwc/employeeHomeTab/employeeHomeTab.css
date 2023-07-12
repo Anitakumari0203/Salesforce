@@ -1,0 +1,16 @@
+.pstyle{
+    background-color: aquamarine;
+    padding:20px;
+    height: 100vh;
+    border:10px ridge yellow;
+}
+
+.tstyle{
+    background-color: yellow;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    height: 85vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}

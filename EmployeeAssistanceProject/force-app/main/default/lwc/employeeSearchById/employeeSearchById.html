@@ -1,0 +1,21 @@
+<template>
+    <lightning-card>
+    <div slot="actions">
+            <lightning-button label="Show" variant="brand" onclick={showbutton} icon-name="utility:database"></lightning-button>
+    </div>
+        
+    <c-employee-event oneevent={handleevent}></c-employee-event><br/>
+   
+    <!--template lwc:if={displayTable}-->
+    <template if:true={displayTable}>
+       <div style="padding:20px;background-color:burlywood;">
+       <lightning-datatable  data={edata} columns={tabcols} key-field="id"
+       hide-checkbox-column="true"
+        onrowaction={empactions}></lightning-datatable>
+    </div>
+     </template>
+     <template if:false={displayTable}>
+        <p class="myCustomClass">{msg}</p>
+    </template>
+    </lightning-card>
+</template>

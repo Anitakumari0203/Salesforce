@@ -1,0 +1,36 @@
+/*Write a trigger on the Account when the Account is updated check all opportunities related to the account. Update all Opportunities
+Stage to close lost if an opportunity created date is greater than 30 days from today and stage not equal to close won.*/
+
+
+trigger Acc on Account (before insert) {
+  list<account> accli =Trigger.new;
+    OppRelatedToAcc.oppmethod(accli);
+}
+
+
+/*Trigger HandlerClass*/
+
+public class OppRelatedToAcc {
+    
+    public static void oppmethod(list<account> acclist){
+        set<id> accIdset = new set<id>();
+        for(account acc:acclist){
+            accIdset.add(acc.id);
+        }
+        //day30 is the date which is 30 days less than today
+         DateTime day30=system.now()-30;
+        list<opportunity> relatedAcc = new list<opportunity>();
+        
+      list<opportunity> accopp = [Select Id, AccountId, StageName,CreatedDate from Opportunity where AccountId in :accIdset];
+        list<opportunity> updatelist = new list<opportunity>();
+        for(opportunity opp :accopp){
+        if(opp.CreatedDate<day30 && opp.StageName!='Closed Won'){
+            opp.StageName = 'Closed Lost';
+            updatelist.add(opp);
+        }  
+        }
+        
+      update updatelist;
+    }
+
+}
